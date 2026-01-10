@@ -1,0 +1,104 @@
+<%@ page import="com.paulquiz.model.User" %>
+    <% // Get user session User navUser=(User) session.getAttribute("user"); boolean navIsLoggedIn=navUser !=null;
+        boolean navIsAdmin=navIsLoggedIn && navUser.isAdmin(); // Detect current page from URI String
+        currentPath=request.getRequestURI(); String contextPath=request.getContextPath(); boolean
+        isHome=currentPath.equals(contextPath + "/" ) || currentPath.equals(contextPath + "/index" ); boolean
+        isModules=currentPath.contains("/modules"); boolean isLeaderboard=currentPath.contains("/leaderboard"); boolean
+        isProfile=currentPath.contains("/profile"); boolean isAdmin=currentPath.contains("/admin"); // CSS classes for
+        active/inactive states String activeClass="text-blue-400 bg-blue-500/10" ; String
+        inactiveClass="text-gray-400 hover:text-white hover:bg-gray-800" ; String
+        adminActiveClass="text-red-400 bg-red-500/20 border border-red-500/30" ; String
+        adminInactiveClass="text-red-400 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20" ; // Assign classes
+        based on current page String homeClass=isHome ? activeClass : inactiveClass; String modulesClass=isModules ?
+        activeClass : inactiveClass; String leaderboardClass=isLeaderboard ? activeClass : inactiveClass; String
+        profileClass=isProfile ? activeClass : inactiveClass; String adminClass=isAdmin ? adminActiveClass :
+        adminInactiveClass; %>
+
+        <!-- Unified Premium Navbar -->
+        <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50 backdrop-blur-xl">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <a href="<%= contextPath %>/" class="flex items-center gap-2 group">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/50 transition-all">
+                            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <span class="font-bold text-xl text-white">Paul Quiz</span>
+                    </a>
+
+                    <!-- Navigation Links -->
+                    <div class="hidden md:flex items-center gap-2">
+                        <a href="<%= contextPath %>/"
+                            class="px-4 py-2 rounded-lg text-sm font-medium transition <%= homeClass %>">
+                            Home
+                        </a>
+                        <a href="<%= contextPath %>/modules"
+                            class="px-4 py-2 rounded-lg text-sm font-medium transition <%= modulesClass %>">
+                            Modul
+                        </a>
+                        <% if (navIsLoggedIn) { %>
+                            <a href="<%= contextPath %>/leaderboard"
+                                class="px-4 py-2 rounded-lg text-sm font-medium transition <%= leaderboardClass %>">
+                                Leaderboard
+                            </a>
+                            <a href="<%= contextPath %>/profile"
+                                class="px-4 py-2 rounded-lg text-sm font-medium transition <%= profileClass %>">
+                                Profile
+                            </a>
+                            <% } %>
+                                <% if (navIsAdmin) { %>
+                                    <a href="<%= contextPath %>/admin"
+                                        class="px-4 py-2 rounded-lg text-sm font-semibold transition <%= adminClass %>">
+                                        Admin Panel
+                                    </a>
+                                    <% } %>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div class="flex items-center gap-4">
+                        <% if (navIsLoggedIn) { %>
+                            <!-- User Info -->
+                            <div class="flex items-center gap-3">
+                                <div class="text-right hidden md:block">
+                                    <div class="text-sm font-semibold text-white">
+                                        <%= navUser.getName() %>
+                                    </div>
+                                    <div class="text-xs text-gray-400">
+                                        <% if (navIsAdmin) { %>
+                                            Administrator
+                                            <% } else { %>
+                                                <%= navUser.getPoints() %> XP
+                                                    <% } %>
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg">
+                                    <%= navUser.getName().substring(0, 1).toUpperCase() %>
+                                </div>
+                            </div>
+                            <!-- Logout Form -->
+                            <form action="<%= contextPath %>/logout" method="POST" class="inline">
+                                <button type="submit"
+                                    class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition">
+                                    Logout
+                                </button>
+                            </form>
+                            <% } else { %>
+                                <!-- Login/Register -->
+                                <a href="<%= contextPath %>/login"
+                                    class="px-4 py-2 text-sm font-medium text-white rounded-lg border border-gray-700 hover:border-gray-600 transition">
+                                    Login
+                                </a>
+                                <a href="<%= contextPath %>/register"
+                                    class="px-4 py-2 text-sm font-medium text-white rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition shadow-lg">
+                                    Register
+                                </a>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </nav>

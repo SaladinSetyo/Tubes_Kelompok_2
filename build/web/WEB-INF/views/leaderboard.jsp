@@ -1,0 +1,203 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ page import="com.paulquiz.model.User" %>
+        <%@ page import="java.util.List" %>
+            <% List<User> topUsers = (List<User>) request.getAttribute("topUsers");
+                    User currentUser = (User) session.getAttribute("user");
+                    %>
+                    <!DOCTYPE html>
+                    <html lang="id" class="dark">
+
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Leaderboard - Paul Quiz</title>
+                        <script src="https://cdn.tailwindcss.com"></script>
+                        <link
+                            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+                            rel="stylesheet">
+                        <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/styles.css">
+                        <script>
+                            tailwind.config = {
+                                darkMode: 'class',
+                                theme: {
+                                    extend: {
+                                        fontFamily: {
+                                            sans: ['Outfit', 'sans-serif'],
+                                        },
+                                        colors: {
+                                            dark: {
+                                                900: '#0F172A',
+                                                800: '#1E293B',
+                                                700: '#334155',
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        </script>
+                    </head>
+
+                    <body class="bg-[#0B1120] text-gray-100 min-h-screen font-sans">
+
+
+                        <!-- Navigation -->
+                        <%@ include file="components/navbar.jsp" %>
+
+
+                            <!-- Main Content -->
+                            <div class="relative overflow-hidden min-h-screen">
+                                <!-- Background Elements -->
+                                <div
+                                    class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-blue-900/20 to-transparent -z-10">
+                                </div>
+                                <div
+                                    class="absolute top-20 left-10 w-72 h-72 bg-purple-600/10 rounded-full blur-[100px] -z-10">
+                                </div>
+                                <div
+                                    class="absolute bottom-20 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -z-10">
+                                </div>
+
+                                <div class="max-w-4xl mx-auto px-4 py-16">
+                                    <div class="text-center mb-12">
+                                        <span
+                                            class="inline-block px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-500 text-sm font-medium mb-4">Top
+                                            Performers</span>
+                                        <h1
+                                            class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                                            Leaderboard</h1>
+                                        <p class="text-gray-400 text-lg">Lihat siapa saja yang memimpin klasemen
+                                            pembelajaran minggu ini.</p>
+                                    </div>
+
+                                    <div
+                                        class="bg-gray-800/50 backdrop-blur-xl border border-gray-700 rounded-2xl overflow-hidden shadow-2xl">
+                                        <!-- Top 3 Podium (Optional Visual enhancement) -->
+                                        <% if (topUsers !=null && topUsers.size()>= 3) { %>
+                                            <div
+                                                class="grid grid-cols-3 gap-4 p-8 border-b border-gray-700 bg-gray-800/30">
+                                                <!-- 2nd Place -->
+                                                <div class="flex flex-col items-center justify-end">
+                                                    <div
+                                                        class="w-16 h-16 rounded-full border-2 border-gray-400 p-1 mb-3">
+                                                        <div
+                                                            class="w-full h-full rounded-full bg-gray-700 flex items-center justify-center text-xl font-bold">
+                                                            <%= topUsers.get(1).getName().substring(0, 1).toUpperCase()
+                                                                %>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div
+                                                            class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                                                            2nd Place</div>
+                                                        <div class="font-bold text-lg truncate w-24">
+                                                            <%= topUsers.get(1).getName() %>
+                                                        </div>
+                                                        <div class="text-yellow-500 font-bold">
+                                                            <%= topUsers.get(1).getPoints() %> pts
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 1st Place -->
+                                                <div class="flex flex-col items-center justify-end -mt-8">
+                                                    <div class="relative">
+                                                        <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-3xl">
+                                                            👑
+                                                        </div>
+                                                        <div
+                                                            class="w-20 h-20 rounded-full border-2 border-yellow-500 p-1 mb-3 shadow-[0_0_20px_rgba(234,179,8,0.3)]">
+                                                            <div
+                                                                class="w-full h-full rounded-full bg-yellow-500 flex items-center justify-center text-2xl font-bold text-black">
+                                                                <%= topUsers.get(0).getName().substring(0,
+                                                                    1).toUpperCase() %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div
+                                                            class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">
+                                                            Champion</div>
+                                                        <div class="font-bold text-xl truncate w-32">
+                                                            <%= topUsers.get(0).getName() %>
+                                                        </div>
+                                                        <div class="text-yellow-400 font-bold text-lg">
+                                                            <%= topUsers.get(0).getPoints() %> pts
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 3rd Place -->
+                                                <div class="flex flex-col items-center justify-end">
+                                                    <div
+                                                        class="w-16 h-16 rounded-full border-2 border-orange-700 p-1 mb-3">
+                                                        <div
+                                                            class="w-full h-full rounded-full bg-orange-900/50 flex items-center justify-center text-xl font-bold">
+                                                            <%= topUsers.get(2).getName().substring(0, 1).toUpperCase()
+                                                                %>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div
+                                                            class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-1">
+                                                            3rd Place</div>
+                                                        <div class="font-bold text-lg truncate w-24">
+                                                            <%= topUsers.get(2).getName() %>
+                                                        </div>
+                                                        <div class="text-yellow-500 font-bold">
+                                                            <%= topUsers.get(2).getPoints() %> pts
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% } %>
+
+                                                <!-- Full List -->
+                                                <div class="divide-y divide-gray-700/50">
+                                                    <% if (topUsers !=null && !topUsers.isEmpty()) { int rank=1; for
+                                                        (User user : topUsers) { %>
+                                                        <div
+                                                            class="flex items-center justify-between p-4 hover:bg-gray-700/30 transition group">
+                                                            <div class="flex items-center gap-4">
+                                                                <div
+                                                                    class="w-8 text-center font-bold text-gray-500 group-hover:text-white transition">
+                                                                    <%= rank %>
+                                                                </div>
+                                                                <div class="flex items-center gap-3">
+                                                                    <div
+                                                                        class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center font-bold text-gray-300">
+                                                                        <%= user.getName().substring(0, 1).toUpperCase()
+                                                                            %>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div
+                                                                            class="font-semibold text-white group-hover:text-blue-400 transition">
+                                                                            <%= user.getName() %>
+                                                                        </div>
+                                                                        <div class="text-xs text-gray-500">
+                                                                            Joined <%= user.getCreatedAt() !=null ? new
+                                                                                java.text.SimpleDateFormat("MMM yyyy").format(user.getCreatedAt()) : "-"
+                                                                                %>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="text-yellow-500 font-bold text-lg">
+                                                                    <%= user.getPoints() %>
+                                                                </span>
+                                                                <span
+                                                                    class="text-xs text-gray-500 uppercase font-medium">XP</span>
+                                                            </div>
+                                                        </div>
+                                                        <% rank++; } } else { %>
+                                                            <div class="p-12 text-center text-gray-500">
+                                                                Belum ada data leaderboard. Jadilah yang pertama!
+                                                            </div>
+                                                            <% } %>
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </body>
+
+                    </html>

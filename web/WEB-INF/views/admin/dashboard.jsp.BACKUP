@@ -1,0 +1,207 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ page import="com.paulquiz.model.User" %>
+        <%@ page import="java.util.List" %>
+            <% Integer totalUsers=(Integer) request.getAttribute("totalUsers"); Integer totalModules=(Integer)
+                request.getAttribute("totalModules"); Integer totalContents=(Integer)
+                request.getAttribute("totalContents"); Integer totalQuizzes=(Integer)
+                request.getAttribute("totalQuizzes"); Integer onlineUsers=(Integer) request.getAttribute("onlineUsers");
+                User currentUser=(User) session.getAttribute("user"); %>
+                <!DOCTYPE html>
+                <html lang="id" class="dark">
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Admin Panel - Paul Quiz</title>
+                    <script src="https://cdn.tailwindcss.com"></script>
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+                        rel="stylesheet">
+                    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/styles.css">
+                    <script>
+                        tailwind.config = {
+                            darkMode: 'class',
+                            theme: {
+                                extend: {
+                                    fontFamily: {
+                                        sans: ['Outfit', 'sans-serif'],
+                                    },
+                                    colors: {
+                                        dark: {
+                                            900: '#0F172A',
+                                            800: '#1E293B',
+                                            700: '#334155',
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+                </head>
+
+                <body class="bg-[#0B1120] text-gray-100 min-h-screen font-sans">
+
+                    <!-- Navbar -->
+                    <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="flex items-center justify-between h-16">
+                                <div class="flex items-center gap-8">
+                                    <a href="<%= request.getContextPath() %>/admin" class="flex items-center gap-2">
+                                        <img src="<%= request.getContextPath() %>/assets/images/logo.svg" alt="Logo"
+                                            class="h-8">
+                                        <span class="font-bold text-xl">Paul Quiz</span>
+                                    </a>
+                                    <div class="hidden md:flex items-center gap-6">
+                                        <a href="<%= request.getContextPath() %>/index"
+                                            class="text-gray-400 hover:text-white transition">Home</a>
+                                        <a href="<%= request.getContextPath() %>/modules"
+                                            class="text-gray-400 hover:text-white transition">Modules</a>
+                                        <a href="<%= request.getContextPath() %>/leaderboard"
+                                            class="text-gray-400 hover:text-white transition">Leaderboard</a>
+                                        <a href="<%= request.getContextPath() %>/admin"
+                                            class="text-blue-500 font-medium">Admin Panel</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4">
+                                    <button class="text-gray-400 hover:text-white">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="relative group">
+                                        <button
+                                            class="flex items-center gap-2 text-sm border border-gray-700 rounded-lg px-3 py-1.5 hover:bg-gray-800 transition">
+                                            <span>Super Admin</span>
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        <h1 class="text-2xl font-bold mb-8">Admin Dashboard</h1>
+
+                        <!-- Welcome Banner -->
+                        <div class="bg-gray-800 rounded-2xl p-8 mb-8 border border-gray-700 relative overflow-hidden">
+                            <div class="relative z-10">
+                                <div class="inline-flex items-center justify-center p-2 bg-gray-700 rounded-lg mb-4">
+                                    <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </div>
+                                <h2 class="text-2xl font-bold mb-2">Selamat Datang di Admin Panel!</h2>
+                                <p class="text-gray-400">Anda dapat mengelola berbagai aspek aplikasi di sini.</p>
+                            </div>
+                            <!-- Decorative circle -->
+                            <div
+                                class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl">
+                            </div>
+                        </div>
+
+                        <!-- Management Cards Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                            <!-- Manajemen Modul -->
+                            <div
+                                class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition group">
+                                <h3 class="text-xl font-bold mb-2">Manajemen Modul</h3>
+                                <p class="text-gray-400 text-sm mb-6 h-10">Tambah, edit, atau hapus modul pembelajaran.
+                                </p>
+                                <a href="<%= request.getContextPath() %>/admin/modules"
+                                    class="inline-block w-full text-center py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition text-sm">
+                                    KELOLA MODUL
+                                </a>
+                            </div>
+
+                            <!-- Manajemen Kuis -->
+                            <div
+                                class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition group">
+                                <h3 class="text-xl font-bold mb-2">Manajemen Kuis</h3>
+                                <p class="text-gray-400 text-sm mb-6 h-10">Buat, modifikasi, dan atur kuis serta
+                                    pertanyaan.</p>
+                                <a href="<%= request.getContextPath() %>/admin/quizzes"
+                                    class="inline-block w-full text-center py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition text-sm">
+                                    KELOLA KUIS
+                                </a>
+                            </div>
+
+                            <!-- Manajemen Konten -->
+                            <div
+                                class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition group">
+                                <h3 class="text-xl font-bold mb-2">Manajemen Konten</h3>
+                                <p class="text-gray-400 text-sm mb-6 h-10">Kelola artikel, video, dan infografis.</p>
+                                <a href="<%= request.getContextPath() %>/admin/contents"
+                                    class="inline-block w-full text-center py-2.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold transition text-sm">
+                                    KELOLA KONTEN
+                                </a>
+                            </div>
+
+                            <!-- Statistik Pengguna -->
+                            <div
+                                class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition group">
+                                <h3 class="text-xl font-bold mb-2">Statistik Pengguna</h3>
+                                <p class="text-gray-400 text-sm mb-6 h-10">Lihat progres dan leaderboard pengguna.</p>
+                                <a href="<%= request.getContextPath() %>/leaderboard"
+                                    class="inline-block w-full text-center py-2.5 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white font-semibold transition text-sm">
+                                    LIHAT LEADERBOARD
+                                </a>
+                            </div>
+
+                            <!-- Broadcast Notifikasi -->
+                            <div
+                                class="bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition group">
+                                <h3 class="text-xl font-bold mb-2">Broadcast Notifikasi</h3>
+                                <p class="text-gray-400 text-sm mb-6 h-10">Kirim notifikasi ke semua pengguna terdaftar.
+                                </p>
+                                <a href="<%= request.getContextPath() %>/admin/notifications"
+                                    class="inline-block w-full text-center py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition text-sm">
+                                    BROADCAST
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <!-- Quick Stats Section (Optional but helpful) -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 text-center">
+                                <div class="text-3xl font-bold text-blue-500 mb-1">
+                                    <%= totalUsers %>
+                                </div>
+                                <div class="text-xs text-gray-400 uppercase tracking-wider">Total User</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 text-center">
+                                <div class="text-3xl font-bold text-green-500 mb-1">
+                                    <%= onlineUsers %>
+                                </div>
+                                <div class="text-xs text-gray-400 uppercase tracking-wider">Online</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 text-center">
+                                <div class="text-3xl font-bold text-purple-500 mb-1">
+                                    <%= totalModules %>
+                                </div>
+                                <div class="text-xs text-gray-400 uppercase tracking-wider">Modul</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 text-center">
+                                <div class="text-3xl font-bold text-orange-500 mb-1">
+                                    <%= totalQuizzes %>
+                                </div>
+                                <div class="text-xs text-gray-400 uppercase tracking-wider">Kuis</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <script src="<%= request.getContextPath() %>/assets/js/theme.js"></script>
+                </body>
+
+                </html>

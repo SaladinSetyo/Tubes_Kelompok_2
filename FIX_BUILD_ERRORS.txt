@@ -1,0 +1,90 @@
+╔════════════════════════════════════════════════════════════╗
+║                                                            ║
+║   FIX BUILD ERRORS - ADD LIBRARIES (3 LANGKAH MUDAH)      ║
+║                                                            ║
+╚════════════════════════════════════════════════════════════╝
+
+ERROR YANG ANDA LIHAT:
+- cannot find symbol: HttpSession
+- cannot find symbol: ServletException
+- method does not override...
+- 100 errors
+
+ROOT CAUSE: JAR Libraries belum ditambahkan!
+
+═══════════════════════════════════════════════════════════
+
+SOLUSI (3 LANGKAH):
+
+┌────────────────────────────────────────────────────────┐
+│ LANGKAH 1: Add Apache Tomcat Library                  │
+└────────────────────────────────────────────────────────┘
+
+1. Right-click project "PaulQuiz" di NetBeans
+2. Pilih "Properties"
+3. Sidebar kiri: click "Libraries"
+4. Tab atas: click "Compile"
+5. Click tombol "Add Library..."
+6. Pilih "Apache Tomcat" (atau "Tomcat 9.0" atau "Tomcat 10.1")
+7. Click "Add Library"
+8. Click "OK"
+
+┌────────────────────────────────────────────────────────┐
+│ LANGKAH 2: Add JAR Files                              │
+└────────────────────────────────────────────────────────┘
+
+Masih di Properties → Libraries → Compile:
+
+1. Click tombol "Add JAR/Folder..."
+2. Navigate ke: C:\CODING\PaulQuiz\lib\
+3. HOLD CTRL, lalu click SEMUA file .jar:
+   - jbcrypt-0.4.jar
+   - jstl-1.2.jar
+   - mysql-connector-j-8.2.0.jar
+   - standard-1.1.2.jar
+4. Click "Open"
+5. Click "OK"
+
+┌────────────────────────────────────────────────────────┐
+│ LANGKAH 3: Clean and Build                            │
+└────────────────────────────────────────────────────────┘
+
+1. Right-click project "PaulQuiz"
+2. Click "Clean and Build" (atau tekan Shift+F11)
+3. Tunggu sampai muncul "BUILD SUCCESSFUL"
+
+═══════════════════════════════════════════════════════
+
+VERIFY BERHASIL:
+
+✓ No more red errors di Output window
+✓ Libraries section shows:
+  - Apache Tomcat
+  - jbcrypt-0.4.jar
+  - jstl-1.2.jar
+  - mysql-connector-j-8.2.0.jar
+  - standard-1.1.2.jar
+✓ BUILD SUCCESSFUL
+
+═══════════════════════════════════════════════════════
+
+SETELAH BUILD SUCCESSFUL:
+
+1. Press F6 (Run)
+2. Browser opens
+3. Test: http://localhost:8080/PaulQuiz/test
+
+═══════════════════════════════════════════════════════
+
+JIKA "Apache Tomcat" TIDAK ADA DI LIST:
+
+Berarti Tomcat belum configured. Solusi alternatif:
+
+1. Download servlet-api.jar manual:
+   https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar
+
+2. Simpan ke: C:\CODING\PaulQuiz\lib\
+
+3. Add via "Add JAR/Folder" seperti JAR files lainnya
+
+═══════════════════════════════════════════════════════
