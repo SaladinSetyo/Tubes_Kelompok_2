@@ -1,7 +1,7 @@
 package com.paulquiz.util;
 
-import java.text.SimpleDateFormat;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -161,6 +161,32 @@ public class DateUtil {
             return null;
         long time = timestamp.getTime() + TimeUnit.DAYS.toMillis(days);
         return new Timestamp(time);
+    }
+
+    /** 
+    * Menghitung selisih waktu dalam format menit:detik (misal untuk durasi kuis)
+     * * @param start Waktu mulai
+     * @param end Waktu selesai
+     * @return String format "mm:ss"
+     */
+    public static String getDuration(Timestamp start, Timestamp end) {
+        if (start == null || end == null) return "00:00";
+        
+        long diff = end.getTime() - start.getTime();
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(diff) % 60;
+        
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    /**
+     * Mengecek apakah waktu sekarang sudah melewati batas waktu tertentu
+     * * @param deadline Waktu batas akhir
+     * @return true jika sudah telat/expired
+     */
+    public static boolean isExpired(Timestamp deadline) {
+        if (deadline == null) return false;
+        return System.currentTimeMillis() > deadline.getTime();
     }
 }
 
