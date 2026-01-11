@@ -1,5 +1,7 @@
 package com.paulquiz.util;
 
+import java.io.IOException;
+
 import com.paulquiz.model.User;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
@@ -234,5 +236,37 @@ public class SessionUtil {
      */
     public static boolean isAdminLoggedIn(HttpSession session) {
         return isLoggedIn(session) && isAdmin(session);
+    }
+
+    /**
+     * Memperbarui ID Sesi untuk mencegah Session Fixation Attack.
+     * Dipanggil setiap kali user berhasil login.
+     * * @param request The HTTP request
+     */
+    public static void refreshSession(HttpServletRequest request) {
+        HttpSession oldSession = request.getSession(false);
+        if (oldSession != null) {
+            // Salin data lama, lalu buat sesi baru dengan ID baru
+            User user = (User) oldSession.getAttribute(USER_KEY);
+            oldSession.invalidate();
+            
+            HttpSession newSession = request.getSession(true);
+            if (user != null) {
+                login(newSession, user);
+            }
+        }
+    }
+
+    /**
+     * Mendapatkan alamat IP user untuk keperluan audit/log.
+     * * @param request The HTTP request
+     * @return String alamat IP
+     */
+    public static String getUserIp(HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+        return ipAddress;
     }
 }
