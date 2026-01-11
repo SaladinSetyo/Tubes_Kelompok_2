@@ -33,7 +33,7 @@
     border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb {
+:::-webkit-scrollbar-thumb {
     background: #9ca3af;
 }
 
