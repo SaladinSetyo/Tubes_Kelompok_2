@@ -73,22 +73,7 @@ public class NotificationDAO {
      * @return List of notifications
      * @throws SQLException if database error occurs
      */
-    public List<Notification> findByUserId(Long userId, int limit) throws SQLException {
-        String sql = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT ?";
-        List<Notification> notifications = new ArrayList<>();
 
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setLong(1, userId);
-            stmt.setInt(2, limit);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    notifications.add(mapResultSetToNotification(rs));
-                }
-            }
-        }
-        return notifications;
-    }
 
     /**
      * Mark notification as read
