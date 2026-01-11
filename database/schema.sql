@@ -183,7 +183,7 @@ CREATE TABLE user_progress (
 -- Table: notifications
 -- =============================================
 CREATE TABLE notifications (
-    id VARCHAR(36) PRIMARY KEY,  -- UUID
+    id VARCHAR(40) PRIMARY KEY,  -- UUID
     user_id BIGINT NOT NULL,
     type VARCHAR(255) NOT NULL,
     data TEXT NOT NULL,

@@ -6,7 +6,7 @@
 -- Disable foreign key checks to allow clearing data
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Clear tables (Use DELETE instead of TRUNCATE to avoid FK constraint errors)
+-- Clear tables (Use DELETE instead of TRUNCATE to avoid FK constraint errors
 DELETE FROM notifications;
 DELETE FROM user_progress;
 DELETE FROM quiz_attempts;

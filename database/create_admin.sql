@@ -5,7 +5,7 @@
 INSERT INTO users (name, email, password, role, points, created_at, updated_at)
 SELECT 
     'Administrator',
-    'admin@paulquiz.com',
+    'admin@gmail.com',
     -- BCrypt hash of 'admin123' (generated with 10 rounds)
     '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
     'admin',
@@ -13,13 +13,13 @@ SELECT
     NOW(),
     NOW()
 WHERE NOT EXISTS (
-    SELECT 1 FROM users WHERE email = 'admin@paulquiz.com'
+    SELECT 1 FROM users WHERE email = 'admin@gmail.com'
 );
 
 -- Display confirmation
 SELECT 
     CASE 
-        WHEN (SELECT COUNT(*) FROM users WHERE email = 'admin@paulquiz.com') > 0 
+        WHEN (SELECT COUNT(*) FROM users WHERE email = 'admin@gmail.com') > 0 
         THEN 'Admin account created/verified successfully!'
         ELSE 'Failed to create admin account'
     END AS result;
@@ -27,4 +27,4 @@ SELECT
 -- Show admin account details (without password)
 SELECT id, name, email, role AS admin_role, points, created_at 
 FROM users 
-WHERE email = 'admin@paulquiz.com';
+WHERE email = 'admin@gmail.com';
