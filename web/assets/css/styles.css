@@ -33,12 +33,12 @@
     border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+::-webkit-scrollbar-thumb {
+    background: #9ca3af;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-    background: #4b5563;
+    background: #6b7280;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
@@ -52,9 +52,12 @@ html {
 
 /* Float animation for logo */
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-20px);
     }
@@ -66,13 +69,13 @@ html {
 
 /* Neon glow effects */
 .neon-green {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 
-                0 0 40px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4),
+        0 0 40px rgba(16, 185, 129, 0.2);
 }
 
 .neon-blue {
     box-shadow: 0 0 20px rgba(37, 99, 235, 0.4),
-                0 0 40px rgba(37, 99, 235, 0.2);
+        0 0 40px rgba(37, 99, 235, 0.2);
 }
 
 /* Glassmorphism effect */
@@ -137,15 +140,23 @@ html {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Pulse animation */
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 1;
     }
+
     50% {
         opacity: 0.5;
     }
