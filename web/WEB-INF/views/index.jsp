@@ -76,24 +76,7 @@
                                 </div>
                             </c:if>
 
-                            <!-- Infographics -->
-                            <c:if test="${not empty infographics}">
-                                <h3 class="text-2xl font-bold mb-6">Infografis Keuangan</h3>
-                                <div class="grid gap-8 md:grid-cols-3">
-                                    <c:forEach items="${infographics}" var="infographic">
-                                        <a href="${infographic.mediaUrl}" target="_blank"
-                                            class="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 block aspect-[3/4]">
-                                            <img src="${infographic.mediaUrl}" alt="${infographic.title}"
-                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                            <div
-                                                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                                                <h4 class="text-white font-bold text-lg mb-2">${infographic.title}</h4>
-                                                <p class="text-gray-300 text-sm">${infographic.description}</p>
-                                            </div>
-                                        </a>
-                                    </c:forEach>
-                                </div>
-                            </c:if>
+
                         </div>
                     </section>
                 </c:if>
