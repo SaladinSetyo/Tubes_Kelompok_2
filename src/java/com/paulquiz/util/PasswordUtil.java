@@ -92,5 +92,35 @@ public class PasswordUtil {
 
         return "Password kuat";
     }
+
+    /**
+     * Mengecek apakah password mengandung karakter spesial (biar makin aman)
+     * @param password Password yang dicek
+     * @return true jika ada simbol seperti @#$%^&
+     */
+    public static boolean hasSpecialChar(String password) {
+        return password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
+    }
+
+    /**
+     * Membersihkan input password dari spasi di awal/akhir 
+     * untuk mencegah error typo yang tidak terlihat
+     * @param password Password kotor
+     * @return Password bersih
+     */
+    public static String sanitize(String password) {
+        return (password == null) ? "" : password.trim();
+    }
+
+    /**
+     * Menghasilkan hint sensor password (misal: p****d)
+     * Berguna untuk halaman profil agar password asli tidak terlihat
+     * @param password Password asli
+     * @return String tersensor
+     */
+    public static String maskPassword(String password) {
+        if (password == null || password.length() < 2) return "***";
+        return password.charAt(0) + "****" + password.charAt(password.length() - 1);
+    }
 }
 
