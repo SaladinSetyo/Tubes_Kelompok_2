@@ -197,4 +197,17 @@ public class QuizAttemptServlet extends HttpServlet {
         }
     }
 
+    private Long extractQuizId(String pathInfo) {
+        if (pathInfo == null)
+            return null;
+        String[] parts = pathInfo.split("/");
+        // Handle cases like /1 or /1/submit
+        if (parts.length < 2)
+            return null;
+        try {
+            return Long.parseLong(parts[1]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }
