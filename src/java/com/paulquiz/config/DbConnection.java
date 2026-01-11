@@ -13,7 +13,7 @@ public class DbConnection {
     // Database configuration - UPDATE THESE VALUES
     private static final String DB_URL = "jdbc:mysql://localhost:3306/paulquiz";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "Root123!";
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     
     private static DbConnection instance;
