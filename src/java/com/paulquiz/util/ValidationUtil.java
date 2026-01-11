@@ -130,5 +130,27 @@ public class ValidationUtil {
     public static boolean isValidScore(Integer score) {
         return score != null && isWithinRange(score, 0, 100);
     }
+
+    /**
+     * Memvalidasi format username (hanya huruf, angka, dan underscore)
+     * Minimal 3 karakter, maksimal 20 karakter
+     * @param username Username yang dicek
+     * @return true jika valid
+     */
+    public static boolean isValidUsername(String username) {
+        if (username == null) return false;
+        return username.matches("^[a-zA-Z0-9_]{3,20}$");
+    }
+
+    /**
+     * Menghapus semua tag HTML secara total (Deep Clean)
+     * Berguna untuk input yang benar-benar tidak boleh ada HTML
+     * @param input Input kotor
+     * @return String bersih tanpa tag
+     */
+    public static String stripHtml(String input) {
+        if (input == null) return null;
+        return input.replaceAll("<[^>]*>", "");
+    }
 }
 
